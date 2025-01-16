@@ -40,11 +40,13 @@ const AddProduct = () => {
 
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files); // Convert FileList to an array
-    const imageUrls = files.map((file) => ({
+    const newImages = files.map((file) => ({
       url: URL.createObjectURL(file),
       name: file.name,
     }));
-    setImages(imageUrls);
+
+    // Append new images to existing images
+    setImages((prevImages) => [...prevImages, ...newImages]);
   };
 
   const handleInputChange = (e) => {
@@ -174,7 +176,7 @@ const AddProduct = () => {
 
         try {
           const response = await axios.post(
-            "https://blissboutiq-backend.onrender.com/api/product",
+            "https://etrade-kils.onrender.com/api/product",
             data,
             {
               headers: {
