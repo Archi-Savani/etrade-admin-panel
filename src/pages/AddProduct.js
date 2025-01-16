@@ -35,12 +35,14 @@ const AddProduct = () => {
     product_images: null,
     stock: "",
   });
-  const [images, setImages] = useState([]);
 
+
+  const [images, setImages] = useState([]);
+  console.log(images)
 
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files); // Convert FileList to an array
-    const newImages = files.map((file) => ({
+    const imageUrls = files.map((file) => ({
       url: URL.createObjectURL(file),
       name: file.name,
     }));
