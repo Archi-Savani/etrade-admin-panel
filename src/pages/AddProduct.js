@@ -116,6 +116,15 @@ const AddProduct = () => {
     setFormData((prev) => ({ ...prev, color_options: newColorOptions }));
   };
 
+  const handleColorImageChange = (e, index) => {
+    const file = e.target.files[0];
+    if (file) {
+      const updatedColors = [...formData.color_options];
+      updatedColors[index].color_images = file;
+      setFormData({ ...formData, color_options: updatedColors });
+    }
+  };
+
   const handleAddPrice = () => {
     setFormData((prev) => ({
       ...prev,
@@ -216,7 +225,7 @@ const AddProduct = () => {
 
       try {
         const response = await axios.post(
-          "https://blissboutiq-backend.onrender.com/api/product",
+          "https://etrade-kils.onrender.com/api/product",
           data,
           {
             headers: {
@@ -421,50 +430,50 @@ const AddProduct = () => {
             />
           </Grid>
 
-          {/*<Grid item xs={12}>*/}
-          {/*  <Typography variant="body1" sx={{ fontWeight: "bold" }}>*/}
-          {/*    Color Options*/}
-          {/*  </Typography>*/}
-          {/*  {formData.color_options.map((color, index) => (*/}
-          {/*    <Grid container spacing={2} key={index} mt={"8px"}>*/}
-          {/*      <Grid item xs={6}>*/}
-          {/*        <TextField*/}
-          {/*          label="Color"*/}
-          {/*          variant="outlined"*/}
-          {/*          name="color"*/}
-          {/*          value={color.color}*/}
-          {/*          onChange={(e) => handleColorChange(e, index)}*/}
-          {/*          fullWidth*/}
-          {/*        />*/}
-          {/*      </Grid>*/}
-          {/*      <Grid item xs={6}>*/}
-          {/*        <Box>*/}
-          {/*          <Typography variant="body1">Upload Product Image</Typography>*/}
-          {/*          <label htmlFor="color_images">*/}
-          {/*            <img*/}
-          {/*              src={*/}
-          {/*                formData.color_options[index]?.color_images*/}
-          {/*                  ? URL.createObjectURL(formData.color_options[index].color_images)*/}
-          {/*                  : upload_area*/}
-          {/*              }*/}
-          {/*              alt="Upload Preview"*/}
-          {/*              style={{ height: 100, cursor: "pointer", objectFit: "cover" }}*/}
-          {/*            />*/}
-          {/*          </label>*/}
-          {/*          <input*/}
-          {/*            type="file"*/}
-          {/*            id="color_images"*/}
-          {/*            name="color_images"*/}
-          {/*            onChange={handleColorChange}*/}
-          {/*            hidden*/}
-          {/*            required*/}
-          {/*          />*/}
-          {/*        </Box>*/}
-          {/*      </Grid>*/}
-          {/*    </Grid>*/}
-          {/*  ))}*/}
-          {/*  <Button onClick={handleAddColor}>Add Color</Button>*/}
-          {/*</Grid>*/}
+          <Grid item xs={12}>
+            <Typography variant="body1" sx={{ fontWeight: "bold" }}>
+              Color Options
+            </Typography>
+            {formData.color_options.map((color, index) => (
+              <Grid container spacing={2} key={index} mt={"8px"}>
+                <Grid item xs={6}>
+                  <TextField
+                    label="Color"
+                    variant="outlined"
+                    name="color"
+                    value={color.color}
+                    onChange={(e) => handleColorChange(e, index)}
+                    fullWidth
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <Box>
+                    <Typography variant="body1">Upload Product Image</Typography>
+                    <label htmlFor="color_images">
+                      <img
+                        src={
+                          formData.color_options[index]?.color_images
+                            ? URL.createObjectURL(formData.color_options[index].color_images)
+                            : upload_area
+                        }
+                        alt="Upload Preview"
+                        style={{ height: 100, cursor: "pointer", objectFit: "cover" }}
+                      />
+                    </label>
+                    <input
+                      type="file"
+                      id="color_images"
+                      name="color_images"
+                      onChange={handleColorChange}
+                      hidden
+                      required
+                    />
+                  </Box>
+                </Grid>
+              </Grid>
+            ))}
+            <Button onClick={handleAddColor}>Add Color</Button>
+          </Grid>
 
 
           <Grid item xs={12}>
