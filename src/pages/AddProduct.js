@@ -42,7 +42,7 @@ const AddProduct = () => {
 
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files); // Convert FileList to an array
-    const imageUrls = files.map((file) => ({
+    const newImages = files.map((file) => ({
       url: URL.createObjectURL(file),
       name: file.name,
     }));
@@ -421,50 +421,50 @@ const AddProduct = () => {
             />
           </Grid>
 
-          <Grid item xs={12}>
-            <Typography variant="body1" sx={{ fontWeight: "bold" }}>
-              Color Options
-            </Typography>
-            {formData.color_options.map((color, index) => (
-              <Grid container spacing={2} key={index} mt={"8px"}>
-                <Grid item xs={6}>
-                  <TextField
-                    label="Color"
-                    variant="outlined"
-                    name="color"
-                    value={color.color}
-                    onChange={(e) => handleColorChange(e, index)}
-                    fullWidth
-                  />
-                </Grid>
-                <Grid item xs={6}>
-                  <Box>
-                    <Typography variant="body1">Upload Product Image</Typography>
-                    <label htmlFor="color_images">
-                      <img
-                        src={
-                          formData.color_options[index]?.color_images
-                            ? URL.createObjectURL(formData.color_options[index].color_images)
-                            : upload_area
-                        }
-                        alt="Upload Preview"
-                        style={{ height: 100, cursor: "pointer", objectFit: "cover" }}
-                      />
-                    </label>
-                    <input
-                      type="file"
-                      id="color_images"
-                      name="color_images"
-                      onChange={handleColorChange}
-                      hidden
-                      required
-                    />
-                  </Box>
-                </Grid>
-              </Grid>
-            ))}
-            <Button onClick={handleAddColor}>Add Color</Button>
-          </Grid>
+          {/*<Grid item xs={12}>*/}
+          {/*  <Typography variant="body1" sx={{ fontWeight: "bold" }}>*/}
+          {/*    Color Options*/}
+          {/*  </Typography>*/}
+          {/*  {formData.color_options.map((color, index) => (*/}
+          {/*    <Grid container spacing={2} key={index} mt={"8px"}>*/}
+          {/*      <Grid item xs={6}>*/}
+          {/*        <TextField*/}
+          {/*          label="Color"*/}
+          {/*          variant="outlined"*/}
+          {/*          name="color"*/}
+          {/*          value={color.color}*/}
+          {/*          onChange={(e) => handleColorChange(e, index)}*/}
+          {/*          fullWidth*/}
+          {/*        />*/}
+          {/*      </Grid>*/}
+          {/*      <Grid item xs={6}>*/}
+          {/*        <Box>*/}
+          {/*          <Typography variant="body1">Upload Product Image</Typography>*/}
+          {/*          <label htmlFor="color_images">*/}
+          {/*            <img*/}
+          {/*              src={*/}
+          {/*                formData.color_options[index]?.color_images*/}
+          {/*                  ? URL.createObjectURL(formData.color_options[index].color_images)*/}
+          {/*                  : upload_area*/}
+          {/*              }*/}
+          {/*              alt="Upload Preview"*/}
+          {/*              style={{ height: 100, cursor: "pointer", objectFit: "cover" }}*/}
+          {/*            />*/}
+          {/*          </label>*/}
+          {/*          <input*/}
+          {/*            type="file"*/}
+          {/*            id="color_images"*/}
+          {/*            name="color_images"*/}
+          {/*            onChange={handleColorChange}*/}
+          {/*            hidden*/}
+          {/*            required*/}
+          {/*          />*/}
+          {/*        </Box>*/}
+          {/*      </Grid>*/}
+          {/*    </Grid>*/}
+          {/*  ))}*/}
+          {/*  <Button onClick={handleAddColor}>Add Color</Button>*/}
+          {/*</Grid>*/}
 
 
           <Grid item xs={12}>
