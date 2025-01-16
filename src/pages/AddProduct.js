@@ -30,13 +30,15 @@ const AddProduct = () => {
     size_options: [],
     rate: [],
     gender: "",
-
+    gallery: "",
     instruction: "",
     product_images: null,
     stock: "",
   });
-  const [images, setImages] = useState([]);
 
+
+  const [images, setImages] = useState([]);
+  console.log(images)
 
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files); // Convert FileList to an array
@@ -96,22 +98,30 @@ const AddProduct = () => {
   };
 
   const handleColorChange = (e, index) => {
+    const { name, value, files } = e.target;
     const newColorOptions = [...formData.color_options];
-    if (e.target.name === "color_images") {
-      // Handle file upload
+  
+    if (name === "color") {
+      // Update color text input
       newColorOptions[index] = {
         ...newColorOptions[index],
-        [e.target.name]: e.target.files[0], // Store the file
+        color: value,
       };
-    } else {
+    } else if (name === "color_images" && files && files[0]) {
+      // Update color image upload
       newColorOptions[index] = {
         ...newColorOptions[index],
-        [e.target.name]: e.target.value,
+        color_images: files[0],
       };
     }
-    setFormData((prev) => ({ ...prev, color_options: newColorOptions }));
+  
+    setFormData((prev) => ({
+      ...prev,
+      color_options: newColorOptions,
+    }));
   };
-
+  
+  
   const handleAddPrice = () => {
     setFormData((prev) => ({
       ...prev,
@@ -142,9 +152,7 @@ const AddProduct = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     const token = localStorage.getItem("token");
-
     let imageBase64 = null;
     if (formData.product_images) {
       const reader = new FileReader();
@@ -166,7 +174,7 @@ const AddProduct = () => {
           size_options: formData.size_options,
           rate: formData.rate,
           gender: formData.gender,
-
+          gallery: formData.gallery,
           stock: formData.stock,
           instruction: formData.instruction,
           product_images: imageBase64,
@@ -174,7 +182,7 @@ const AddProduct = () => {
 
         try {
           const response = await axios.post(
-            "https://blissboutiq-backend.onrender.com/api/product",
+            "https://etrade-kils.onrender.com/api/product/",
             data,
             {
               headers: {
@@ -204,7 +212,7 @@ const AddProduct = () => {
         size_options: formData.size_options,
         rate: formData.rate,
         gender: formData.gender,
-
+        gallery: formData.gallery,
         stock: formData.stock,
         instruction: formData.instruction,
         product_images: null,
@@ -212,7 +220,7 @@ const AddProduct = () => {
 
       try {
         const response = await axios.post(
-          "https://blissboutiq-backend.onrender.com/api/product",
+          "https://etrade-kils.onrender.com/api/product",
           data,
           {
             headers: {
@@ -225,6 +233,7 @@ const AddProduct = () => {
         console.error("Error uploading product:", error);
       }
     }
+    
   };
 
   return (
@@ -435,28 +444,42 @@ const AddProduct = () => {
                 </Grid>
                 <Grid item xs={6}>
                   <Box>
-                    <Typography variant="body1">Upload Product Image</Typography>
-                    <label htmlFor="color_images">
-                      <img
-                        src={
-                          formData.color_options[index]?.color_images
-                            ? URL.createObjectURL(formData.color_options[index].color_images)
-                            : upload_area
-                        }
-                        alt="Upload Preview"
-                        style={{ height: 100, cursor: "pointer", objectFit: "cover" }}
+                    <Typography variant="body1">Upload Color Image</Typography>
+                    <Button
+                      variant="outlined"
+                      component="label"
+                      fullWidth
+                    >
+                      {formData.color_options[index]?.color_images
+                        ? "Change Image"
+                        : "Upload Image"}
+                      <input
+                        type="file"
+                        name="color_images"
+                        accept="image/*"
+                        hidden
+                        onChange={(e) => handleColorChange(e, index)}  // Pass index here
                       />
-                    </label>
-                    <input
-                      type="file"
-                      id="color_images"
-                      name="color_images"
-                      onChange={handleColorChange}
-                      hidden
-                      required
-                    />
+                    </Button>
+
+                    {formData.color_options[index]?.color_images && (
+                      <Box mt={1} sx={{height: "100%", width: "100%"}}>
+                        <img
+                          src={URL.createObjectURL(formData.color_options[index].color_images)}
+                          alt="Color Preview"
+                          style={{
+                            height: "100px",
+                            width: "100px",
+                            objectFit: "cover",
+                            borderRadius: 4,
+                            border: "1px solid #ddd",
+                          }}
+                        />
+                      </Box>
+                    )}
                   </Box>
                 </Grid>
+
               </Grid>
             ))}
             <Button onClick={handleAddColor}>Add Color</Button>
@@ -525,6 +548,8 @@ const AddProduct = () => {
                       }}
                     >
                       <img
+                        name='gallery'
+                        value={formData.gallery}
                         src={image.url}
                         alt={image.name}
                         style={{
@@ -590,22 +615,6 @@ const AddProduct = () => {
               </Select>
             </FormControl>
           </Grid>
-
-          <Grid item xs={12} sm={6}>
-            <FormControl fullWidth>
-              <InputLabel>Category</InputLabel>
-              <Select
-                name="category"
-                value={formData.category}
-                onChange={handleInputChange}
-                label="Category"
-              >
-                <MenuItem value="men">Men</MenuItem>
-                <MenuItem value="women">Women</MenuItem>
-              </Select>
-            </FormControl>
-          </Grid>
-
 
           <Grid item xs={12}>
             <TextareaAutosize
