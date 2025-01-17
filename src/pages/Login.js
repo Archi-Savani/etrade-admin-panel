@@ -29,6 +29,7 @@ const Login_form = () => {
   const notifyError = (message) => toast.error(message);
   const formik = useFormik({
     initialValues: {
+      name: "",
       email: "",
       password: "",
     },
@@ -127,6 +128,17 @@ const Login_form = () => {
           </Box>
           <form onSubmit={formik.handleSubmit} onReset={formik.handleReset}>
             <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  label="Name"
+                  name="name"
+                  value={formik.values.name}
+                  onChange={formik.handleChange}
+                  error={formik.touched.name && Boolean(formik.errors.name)}
+                  helperText={formik.touched.name && formik.errors.name}
+                />
+              </Grid>
               <Grid item xs={12}>
                 <TextField
                   fullWidth

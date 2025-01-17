@@ -30,7 +30,6 @@ const AddProduct = () => {
     size_options: [],
     rate: [],
     gender: "",
-
     instruction: "",
     product_images: null,
     stock: "",
@@ -179,7 +178,6 @@ const AddProduct = () => {
           size_options: formData.size_options,
           rate: formData.rate,
           gender: formData.gender,
-
           stock: formData.stock,
           instruction: formData.instruction,
           product_images: imageBase64,
@@ -217,7 +215,6 @@ const AddProduct = () => {
         size_options: formData.size_options,
         rate: formData.rate,
         gender: formData.gender,
-
         stock: formData.stock,
         instruction: formData.instruction,
         product_images: null,
