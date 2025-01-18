@@ -123,7 +123,6 @@ const AddProduct = () => {
       setFormData({ ...formData, color_options: updatedColors });
     }
   };
-
   const handleAddPrice = () => {
     setFormData((prev) => ({
       ...prev,
@@ -148,7 +147,7 @@ const AddProduct = () => {
   const handleAddColor = () => {
     setFormData((prev) => ({
       ...prev,
-      color_options: [...prev.color_options, { color: "", color_images: "" }],
+      color_options: [...prev.color_options, { color: "", color_images: null }],
     }));
   };
 
@@ -432,42 +431,42 @@ const AddProduct = () => {
               Color Options
             </Typography>
             {formData.color_options.map((color, index) => (
-              <Grid container spacing={2} key={index} mt={"8px"}>
-                <Grid item xs={6}>
-                  <TextField
-                    label="Color"
-                    variant="outlined"
-                    name="color"
-                    value={color.color}
-                    onChange={(e) => handleColorChange(e, index)}
-                    fullWidth
-                  />
-                </Grid>
-                <Grid item xs={6}>
-                  <Box>
-                    <Typography variant="body1">Upload Product Image</Typography>
-                    <label htmlFor="color_images">
-                      <img
-                        src={
-                          formData.color_options[index]?.color_images
-                            ? URL.createObjectURL(formData.color_options[index].color_images)
-                            : upload_area
-                        }
-                        alt="Upload Preview"
-                        style={{ height: 100, cursor: "pointer", objectFit: "cover" }}
-                      />
-                    </label>
-                    <input
-                      type="file"
-                      id="color_images"
-                      name="color_images"
-                      onChange={handleColorChange}
-                      hidden
-                      required
+                <Grid container spacing={2} key={index} mt={"8px"}>
+                  <Grid item xs={6}>
+                    <TextField
+                        label="Color"
+                        variant="outlined"
+                        name="color"
+                        value={color.color}
+                        onChange={(e) => handleColorChange(e, index)}
+                        fullWidth
                     />
-                  </Box>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Box>
+                      <Typography variant="body1">Upload Product Image</Typography>
+                      <label htmlFor={`color_images_${index}`}>
+                        <img
+                            src={
+                              formData.color_options[index]?.color_images
+                                  ? URL.createObjectURL(formData.color_options[index].color_images)
+                                  : upload_area
+                            }
+                            alt="Upload Preview"
+                            style={{ height: 100, cursor: "pointer", objectFit: "cover" }}
+                        />
+                      </label>
+                      <input
+                          type="file"
+                          id={`color_images_${index}`}
+                          name="color_images"
+                          onChange={(e) => handleColorImageChange(e, index)}
+                          hidden
+                          required
+                      />
+                    </Box>
+                  </Grid>
                 </Grid>
-              </Grid>
             ))}
             <Button onClick={handleAddColor}>Add Color</Button>
           </Grid>
@@ -601,20 +600,20 @@ const AddProduct = () => {
             </FormControl>
           </Grid>
 
-          <Grid item xs={12} sm={6}>
-            <FormControl fullWidth>
-              <InputLabel>Category</InputLabel>
-              <Select
-                name="category"
-                value={formData.category}
-                onChange={handleInputChange}
-                label="Category"
-              >
-                <MenuItem value="men">Men</MenuItem>
-                <MenuItem value="women">Women</MenuItem>
-              </Select>
-            </FormControl>
-          </Grid>
+          {/*<Grid item xs={12} sm={6}>*/}
+          {/*  <FormControl fullWidth>*/}
+          {/*    <InputLabel>Category</InputLabel>*/}
+          {/*    <Select*/}
+          {/*      name="category"*/}
+          {/*      value={formData.category}*/}
+          {/*      onChange={handleInputChange}*/}
+          {/*      label="Category"*/}
+          {/*    >*/}
+          {/*      <MenuItem value="men">Men</MenuItem>*/}
+          {/*      <MenuItem value="women">Women</MenuItem>*/}
+          {/*    </Select>*/}
+          {/*  </FormControl>*/}
+          {/*</Grid>*/}
 
 
           <Grid item xs={12}>
