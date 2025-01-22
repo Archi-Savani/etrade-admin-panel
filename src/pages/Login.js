@@ -83,6 +83,27 @@ const Login_form = () => {
         });
     },
   });
+    const handleLogout = () => {
+        // Check if a token exists in local storage
+        const token = localStorage.getItem("token");
+
+        // Log the token for debugging
+        console.log("Token:", token);
+
+        if (token) {
+            // Remove the token from local storage
+            localStorage.removeItem("token");
+
+            // Show a success message
+            toast.success("Logged out successfully");
+
+            // Redirect to the login page or another appropriate page
+            navigate("/");
+        } else {
+            // Show an error message if no token is found
+            toast.error("No token found. Please log in first.");
+        }
+    };
   return (
     <Box>
       <Grid container justifyContent="center">
@@ -219,8 +240,37 @@ const Login_form = () => {
                   </Button>
                 </Box>
               </Grid>
+
             </Grid>
           </form>
+          <Grid item xs={12}>
+            <Box display="flex" justifyContent="flex-end" my={3}>
+              <Button
+                  onClick={handleLogout}
+                  type="Submit"
+                  variant="contained"
+                  sx={{
+                    textTransform: "unset",
+                    border: "1px solid black",
+                    padding: {
+                      xs: "12px 30px",
+                      sm: "12px 60px",
+                      md: "12px 88px",
+                    },
+                    fontSize: "16px",
+                    fontWeight: "500",
+                    borderRadius: "0px",
+                    backgroundColor: "#000000",
+                    "&:hover": {
+                      backgroundColor: "#FFFFFF",
+                      color: "#000000",
+                    },
+                  }}
+              >
+                LOG Out
+              </Button>
+            </Box>
+          </Grid>
         </Grid>
       </Grid>
     </Box>

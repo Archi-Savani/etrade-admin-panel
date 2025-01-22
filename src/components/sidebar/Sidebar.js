@@ -43,6 +43,7 @@ const Sidebar = ({
     },
     { text: "Trash", icon: <InboxIcon /> },
     { text: "Spam", icon: <MailIcon /> },
+      { text: "Log out"},
   ];
 
   const handleSubmenuClick = (text) => {
