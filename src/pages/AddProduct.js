@@ -173,14 +173,33 @@ const AddProduct = () => {
         formDataToSend.append("gender", formData.gender);
         formDataToSend.append("instruction", formData.instruction);
 
-
         if (formData.product_images) {
             formDataToSend.append("product_images", formData.product_images);
         }
-        if (formData.color_images) {
-            formDataToSend.append("color_images", formData.color_images);
+
+        if (formData.color_options) {
+            formData.color_options.forEach((colorOption, index) => {
+                if (colorOption.color_images) {
+                    formDataToSend.append(`color_images[${index}]`, colorOption.color_images);
+                }
+            });
         }
 
+
+        // Convert gallery image Blob URLs to binary and append them
+        if (images.length > 0) {
+            for (const image of images) {
+                if (image.url) {
+                    try {
+                        const response = await fetch(image.url); // Fetch Blob data from the URL
+                        const blob = await response.blob(); // Convert to Blob
+                        formDataToSend.append('gallery', blob, image.name || 'gallery_image'); // Append Blob to FormData
+                    } catch (error) {
+                        console.error(`Error fetching gallery image ${image.url}:`, error);
+                    }
+                }
+            }
+        }
 
         try {
             const response = await axios.post(
@@ -198,6 +217,7 @@ const AddProduct = () => {
             console.error("Error uploading product:", error.response?.data || error.message);
         }
     };
+
 
 
     return (
