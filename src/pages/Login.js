@@ -83,27 +83,36 @@ const Login_form = () => {
         });
     },
   });
-    const handleLogout = () => {
-        // Check if a token exists in local storage
-        const token = localStorage.getItem("token");
-
-        // Log the token for debugging
-        console.log("Token:", token);
-
-        if (token) {
-            // Remove the token from local storage
-            localStorage.removeItem("token");
-
-            // Show a success message
-            toast.success("Logged out successfully");
-
-            // Redirect to the login page or another appropriate page
-            navigate("/");
-        } else {
-            // Show an error message if no token is found
-            toast.error("No token found. Please log in first.");
-        }
-    };
+  const handleLogout = () => {
+    const token = localStorage.getItem("token");
+    console.log("Token:", token);
+    axios
+        .post("https://etrade-kils.onrender.com/api/user/logout", {}, {
+          headers: {
+            Authorization: ` ${token}`, // Pass the token for authorization
+          },
+        })
+        .then(() => {
+          localStorage.removeItem("token"); // Clear token from storage
+          toast.success("Logged out successfully");
+          navigate("/"); // Redirect to login page
+        })
+        .catch((error) => {
+          const status = error.response ? error.response.status : 500;
+          switch (status) {
+            case 401:
+              toast.error("Unauthorized. Please log in first.");
+              break;
+            case 500:
+              toast.error("Server error. Please try again later.");
+              break;
+            default:
+              toast.error("An unknown error occurred.");
+              break;
+          }
+        });
+      console.log("aditi")
+  };
   return (
     <Box>
       <Grid container justifyContent="center">
