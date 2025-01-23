@@ -157,6 +157,7 @@ const AddProduct = () => {
         const token = localStorage.getItem("token");
         const formDataToSend = new FormData();
 
+        // Append basic fields
         formDataToSend.append("title", formData.title);
         formDataToSend.append("category", formData.category);
         formDataToSend.append("sub_category", formData.sub_category);
@@ -167,24 +168,28 @@ const AddProduct = () => {
         formDataToSend.append("brand", formData.brand);
         formDataToSend.append("quantity", formData.quantity);
         formDataToSend.append("sold", formData.sold);
-        formDataToSend.append("color_options", JSON.stringify(formData.color_options));
         formDataToSend.append("size_options", JSON.stringify(formData.size_options));
         formDataToSend.append("rate", JSON.stringify(formData.rate));
         formDataToSend.append("gender", formData.gender);
         formDataToSend.append("instruction", formData.instruction);
 
+        // Append product images
         if (formData.product_images) {
             formDataToSend.append("product_images", formData.product_images);
         }
 
+        // Append color options with color_images
         if (formData.color_options) {
             formData.color_options.forEach((colorOption, index) => {
+                formDataToSend.append(`color_options[${index}]`, JSON.stringify({
+                    color: colorOption.color,
+                }));
+
                 if (colorOption.color_images) {
-                    formDataToSend.append(`color_images[${index}]`, colorOption.color_images);
+                    formDataToSend.append(`color_options[${index}].color_images`, colorOption.color_images);
                 }
             });
         }
-
 
         // Convert gallery image Blob URLs to binary and append them
         if (images.length > 0) {
@@ -203,7 +208,7 @@ const AddProduct = () => {
 
         try {
             const response = await axios.post(
-                "https://etrade-kils.onrender.com/api/product",
+                "http://localhost:5000/api/product",
                 formDataToSend,
                 {
                     headers: {
