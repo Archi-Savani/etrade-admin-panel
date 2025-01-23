@@ -185,6 +185,23 @@ const AddProduct = () => {
             });
         }
 
+        // if (formData.color_options) {
+        //     // Convert `color_options` to JSON first
+        //     formData.color_options.forEach((colorOption, index) => {
+        //         // Append the base color option without images
+        //         const tempColorOption = { ...colorOption, color_images: [] };
+        //
+        //         // Append images for this color option
+        //         if (colorOption.color_images && colorOption.color_images.length > 0) {
+        //             colorOption.color_images.forEach((file, fileIndex) => {
+        //                 formDataToSend.append(`color_images[${index}][${fileIndex}]`, file);
+        //             });
+        //         }
+        //
+        //         // Add the color option JSON back (without files)
+        //         formDataToSend.append(`color_options[${index}]`, JSON.stringify(tempColorOption));
+        //     });
+        // }
 
         // Convert gallery image Blob URLs to binary and append them
         if (images.length > 0) {
@@ -203,7 +220,7 @@ const AddProduct = () => {
 
         try {
             const response = await axios.post(
-                "https://etrade-kils.onrender.com/api/product",
+                "https://etrade-kils.onrender.com/api/product/",
                 formDataToSend,
                 {
                     headers: {
