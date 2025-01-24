@@ -29,6 +29,8 @@ const Sidebar = ({
   const [openSubmenu, setOpenSubmenu] = useState({});
 
   const menuItems = [
+      { text: "Category", icon: <MailIcon />, path: "/category" },
+      { text: "Subcategory", icon: <MailIcon />, path: "/subcategory" },
     { text: "Inbox", icon: <InboxIcon /> },
     { text: "Starred", icon: <MailIcon /> },
     { text: "Send email", icon: <InboxIcon /> },

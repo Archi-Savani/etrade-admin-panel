@@ -6,6 +6,10 @@ import AddProduct from "./pages/AddProduct";
 import { Box, CssBaseline, styled } from "@mui/material";
 import Sidebar from "./components/sidebar/Sidebar";
 import Login_form from "./pages/Login";
+import Category from "./components/Category/Category";
+import CategoryList from "./components/Category/CategoryList";
+import Subcategory from "./components/Subcategory/Subcategory";
+import SubcategoryList from "./components/Subcategory/SubcategoryList";
 
 const drawerWidth = 300;
 
@@ -70,6 +74,12 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/add-product" element={<AddProduct />} />
           <Route path="/login" element={<Login_form />} />
+          <Route path="/category" element={<CategoryList/>}/>
+          <Route path="/add-category" element={<Category/>}/>
+          <Route path="/edit-category/:id" element={<Category/>}/>
+          <Route path="/subcategory" element={<SubcategoryList/>}/>
+          <Route path="/add-subcategory" element={<Subcategory/>}/>
+          <Route path="/edit-subcategory/:id" element={<Subcategory/>}/>
         </Routes>
       </Main>
     </Box>
